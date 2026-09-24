@@ -7,6 +7,9 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace JankiiBuffer;
 
+// https://docs.sixlabors.com/articles/imagesharp/pixelbuffers.html?q=Process%20pixel#use-processpixelrows-for-fast-known-format-access
+
+
 class ImageProcessor
 {
 
