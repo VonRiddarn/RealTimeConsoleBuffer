@@ -15,26 +15,33 @@ class Program
 		Console.CursorVisible = false;
 		Console.Clear();
 
-		ConsoleBuffer buffer = new();
+		var image = ImageProcessor.GetImageInfo("images/timmy.png");
+		ConsoleBuffer buffer = new(image.Width, image.Height);
 		buffer.Clear();
 
-		float brightness = 0;
+		// TODO: Move this somewhere better...
+		for (int y = 0; y < buffer.Height; y++)
+		{
+			for (int x = 0; x < buffer.Width; x++)
+			{
+				int index = y * buffer.Width + x;
 
-		// for (int y = 0; y < buffer.Height; y++)
-		// 	for (int x = 0; x < buffer.Width; x++)
-		// 	{
-		// 		buffer.SetCell(x, y, brightness++);
-		// 		if (brightness >= 100)
-		// 			brightness = 0;
-		// 	}
+				// Byte offset
+				index *= 4;
+
+				byte r = image.PixelBuffer[index];
+				byte g = image.PixelBuffer[index + 1];
+				byte b = image.PixelBuffer[index + 2];
+				//byte a = image.PixelBuffer[index + 3];
+
+				float brightness = (0.2126f * (float)r + 0.7152f * (float)g + 0.0722f * (float)b) / 255f * 100f;
+
+				// Console.WriteLine($"R {r}\tG {g}\tB {b}\t A {a}\tBR {brightness}");
+
+				buffer.SetCell(x, y, brightness);
+			}
+		}
 
 		buffer.Draw();
-
-		var arr = ImageProcessor.GetPixelBuffer("timmy.png");
-
-		Console.WriteLine(arr.Length);
-		Console.WriteLine(arr.Length % 4);
-		Console.WriteLine($"{arr[0]},{arr[1]},{arr[2]},{arr[3]}");
-
 	}
 }
