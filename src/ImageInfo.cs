@@ -1,0 +1,1 @@
+record struct ImageInfo(int Width, int Height, byte[] PixelBuffer);
